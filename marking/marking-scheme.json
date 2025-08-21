@@ -11,20 +11,50 @@
       "aspects": [
         {
           "type": "measurement",
-          "description": "Database SQL dump provided in db/db-dump.sql",
-          "maxMark": 0.25,
+          "description": "Database SQL dump file exists in db/db-dump.sql",
+          "maxMark": 0.125,
           "wsosSection": 1,
-          "extraDescription": "Complete database dump file is provided with schema and sample data that can be executed without errors on a fresh MySQL instance",
+          "extraDescription": "SQL dump file is present in the correct location",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Server application deployed and accessible on port 80",
-          "maxMark": 0.75,
+          "description": "Database dump executes without errors",
+          "maxMark": 0.125,
           "wsosSection": 1,
-          "extraDescription": "REST API server is running and responds to requests at /api/v1 endpoints with proper JSON responses",
+          "extraDescription": "SQL dump can be executed on a fresh MySQL instance without syntax errors",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Server application starts and runs",
+          "maxMark": 0.25,
+          "wsosSection": 1,
+          "extraDescription": "REST API server starts without errors and stays running",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "API endpoints respond with JSON format",
+          "maxMark": 0.25,
+          "wsosSection": 1,
+          "extraDescription": "API endpoints return proper JSON responses with correct Content-Type headers",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "API accessible on correct base path /api/v1",
+          "maxMark": 0.25,
+          "wsosSection": 1,
+          "extraDescription": "All endpoints are accessible under the /api/v1 base path",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -36,30 +66,60 @@
       "aspects": [
         {
           "type": "measurement",
-          "description": "Authentication error responses return 401 with proper JSON format",
-          "maxMark": 0.25,
+          "description": "401 status code returned for missing authentication",
+          "maxMark": 0.125,
           "wsosSection": 2,
-          "extraDescription": "Missing or invalid X-API-TOKEN header returns 401 status with {\"message\": \"Invalid token\"} response",
+          "extraDescription": "Missing X-API-TOKEN header returns 401 status code",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "HTTP status codes compliance for all endpoints",
-          "maxMark": 0.25,
+          "description": "Authentication error response includes proper message",
+          "maxMark": 0.125,
           "wsosSection": 2,
-          "extraDescription": "Correct status codes used: 200 (success), 201 (created), 400 (bad request), 401 (unauthorized), 403 (forbidden), 404 (not found), 409 (conflict)",
+          "extraDescription": "401 responses include JSON with meaningful error message",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Consistent JSON error response format across all endpoints",
-          "maxMark": 0.25,
+          "description": "Success endpoints return 200 status code",
+          "maxMark": 0.125,
           "wsosSection": 2,
-          "extraDescription": "All error responses include meaningful message field with human-readable descriptions",
+          "extraDescription": "Successful GET requests return 200 status code",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Resource creation returns 201 status code",
+          "maxMark": 0.125,
+          "wsosSection": 2,
+          "extraDescription": "User registration and enrollment return 201 status code",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Not found errors return 404 status code",
+          "maxMark": 0.125,
+          "wsosSection": 2,
+          "extraDescription": "Invalid course IDs and non-existent resources return 404",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Error responses include descriptive messages",
+          "maxMark": 0.125,
+          "wsosSection": 2,
+          "extraDescription": "All error responses contain human-readable message field",
           "calculation": {
             "type": "pass-or-fail"
           }
@@ -67,244 +127,527 @@
       ]
     },
     {
-      "name": "Authentication and Security Implementation",
+      "name": "User Authentication Implementation",
       "aspects": [
         {
           "type": "measurement",
-          "description": "X-API-TOKEN authentication required for protected endpoints",
-          "maxMark": 1,
+          "description": "Protected endpoints require X-API-TOKEN header",
+          "maxMark": 0.75,
           "wsosSection": 5,
-          "extraDescription": "All endpoints except /users/register and /users/login require valid API token in X-API-TOKEN header",
+          "extraDescription": "All endpoints except register/login check for X-API-TOKEN header",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "User registration endpoint with email uniqueness validation",
-          "maxMark": 0.5,
+          "description": "Invalid tokens are rejected properly",
+          "maxMark": 0.75,
           "wsosSection": 5,
-          "extraDescription": "POST /users/register creates new user with 0 credits, validates email uniqueness, returns 400 if email exists",
+          "extraDescription": "Invalid or expired tokens return 401 authorization error",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "User login endpoint with credential validation",
-          "maxMark": 0.5,
-          "wsosSection": 5,
-          "extraDescription": "POST /users/login validates email/password, returns user info and token on success, 401 on failure",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "User logout endpoint with token revocation",
+          "description": "User registration endpoint accepts requests",
           "maxMark": 0.25,
           "wsosSection": 5,
-          "extraDescription": "POST /users/logout sets revokedAt timestamp for current token, returns 401 if token already invalid",
+          "extraDescription": "POST /users/register endpoint exists and accepts JSON requests",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
           "type": "measurement",
-          "description": "Input validation and sanitization on all endpoints",
-          "maxMark": 0.5,
+          "description": "Registration creates new user with 0 credits",
+          "maxMark": 0.25,
           "wsosSection": 5,
-          "extraDescription": "Request validation prevents SQL injection, validates required fields, sanitizes user input",
+          "extraDescription": "New users are created with creditBalance set to 0",
           "calculation": {
             "type": "pass-or-fail"
           }
         },
         {
+          "type": "measurement",
+          "description": "Registration validates email uniqueness",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Duplicate email addresses return 400 error",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Registration returns user information on success",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Successful registration returns user object with id, email, name, credits",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "User login endpoint validates credentials",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "POST /users/login validates email and password combination",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Login returns authentication token",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Successful login returns valid API token for subsequent requests",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Login returns user information",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Login response includes user object with current credit balance",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Invalid login credentials return 401",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Wrong email/password combinations return 401 unauthorized",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Logout endpoint revokes tokens",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "POST /users/logout invalidates the current API token",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Logout returns success confirmation",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Logout returns 200 status with success message",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Profile and Statistics API",
+      "aspects": [
+        {
+          "type": "measurement",
+          "description": "User profile endpoint exists and responds",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "GET /users/me endpoint exists and returns valid JSON response",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Profile returns basic user information",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Response includes user id, name, email, and current credit balance",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Profile includes enrollment statistics",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Response includes stats like enrolledCourses and completedChapters counts",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Profile includes credit statistics",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Response includes totalCreditsEarned and upcomingBookings counts",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Recent activity feed is included",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Response includes recentActivity array with user's recent actions",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Activity feed has correct event types",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Activity events include chapter_completed and session_booked types",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Activity events include proper timestamps",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "All activity events have ISO 8601 formatted timestamps",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Credit balance calculation is accurate",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "User credit balance reflects all earnings and expenditures correctly",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Course Management API",
+      "aspects": [
+        {
+          "type": "measurement",
+          "description": "Course listing endpoint returns all courses",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "GET /courses returns array of all available courses",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Course listing includes enrollment status",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Each course includes isEnrolled field for current user",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Course listing includes metadata",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Courses include title, description, difficulty, totalChapters, totalCredits",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Course details endpoint returns single course",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "GET /courses/:id returns detailed information for specific course",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Course details include chapter information",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Course details include chapters array with completion status",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Invalid course ID returns 404",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Non-existent course IDs return 404 not found error",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Course enrollment creates enrollment record",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "POST /courses/:id/enroll successfully creates enrollment in database",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Duplicate enrollment returns 409 conflict",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Enrolling in already enrolled course returns 409 conflict",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Chapter completion requires enrollment",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Chapter completion fails with 403 if user not enrolled in course",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Chapter completion awards credits",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Completing chapter increases user credit balance by chapter credits",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Chapter completion creates completion record",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Completion creates record in chapter_completions table",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Duplicate completion returns 409 conflict",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Completing already completed chapter returns 409 conflict",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Mentor Session Management API",
+      "aspects": [
+        {
+          "type": "measurement",
+          "description": "Mentor sessions listing returns available sessions",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "GET /mentors/sessions returns array of available mentor sessions",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Session listing includes mentor information",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "Sessions include mentorName, expertise, experienceLevel",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Session listing includes session details",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "Sessions include sessionDate, durationMinutes, creditCost",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Session booking creates booking record",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "POST /mentors/sessions/:id/book creates session booking in database",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Session booking validates credit balance",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "Booking fails with 403 if user has insufficient credits",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Session booking deducts credits",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "Successful booking decreases user credit balance by session cost",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Session booking creates transaction record",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "Booking creates credit transaction record for audit trail",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Session booking returns booking information",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "Successful booking returns booking object with id, status, creditsPaid",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Unavailable sessions return 409 conflict",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "Booking unavailable sessions returns 409 conflict error",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Invalid session ID returns 404",
+          "maxMark": 0.125,
+          "wsosSection": 5,
+          "extraDescription": "Non-existent session IDs return 404 not found error",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Input Validation and Security",
+      "aspects": [
+        {
+          "type": "measurement",
+          "description": "Request validation prevents SQL injection",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "Uses parameterized queries or ORM to prevent SQL injection attacks",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Required fields validation implemented",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "API validates that required fields are present in requests",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "Password hashing implemented securely",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "User passwords are hashed using bcrypt or similar secure algorithm",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        },
+        {
+          "type": "measurement",
+          "description": "User input sanitization applied",
+          "maxMark": 0.25,
+          "wsosSection": 5,
+          "extraDescription": "User inputs are sanitized to prevent XSS and injection attacks",
+          "calculation": {
+            "type": "pass-or-fail"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Code Quality and Project Structure",
+      "aspects": [
+        {
           "type": "judgement",
-          "description": "Security implementation and best practices",
+          "description": "Framework conventions and file organization",
           "maxMark": 0.5,
           "wsosSection": 5,
           "judgementScoreDescription": [
-            "Poor security implementation with multiple vulnerabilities and no password hashing",
-            "Basic security measures with some input validation but weak password handling",
-            "Good security implementation with proper password hashing and most input validation",
-            "Excellent comprehensive security with bcrypt hashing, complete input validation, and secure token management"
+            "Poor code organization with no framework conventions followed",
+            "Basic framework structure but inconsistent naming and organization",
+            "Good framework conventions with proper controllers, models, and middleware",
+            "Excellent framework implementation with perfect MVC structure and clean architecture"
           ]
-        }
-      ]
-    },
-    {
-      "name": "User Management API Implementation",
-      "aspects": [
-        {
-          "type": "measurement",
-          "description": "User profile endpoint with statistics and activity feed",
-          "maxMark": 0.75,
-          "wsosSection": 5,
-          "extraDescription": "GET /users/me returns user info, enrollment/completion stats, and recent activity feed with proper JSON structure",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
         },
         {
-          "type": "measurement",
-          "description": "Recent activity feed with correct data types and timestamps",
+          "type": "judgement",
+          "description": "Database schema and relationships quality",
           "maxMark": 0.25,
           "wsosSection": 5,
-          "extraDescription": "Activity feed includes chapter_completed and session_booked events with proper timestamps, descriptions, and credit information",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
+          "judgementScoreDescription": [
+            "Poor database design with missing relationships and constraints",
+            "Basic schema with some relationships but missing key constraints",
+            "Good normalized schema with proper foreign keys and relationships",
+            "Excellent database design with optimal normalization and comprehensive constraints"
+          ]
         },
         {
-          "type": "measurement",
-          "description": "Credit balance calculation and tracking",
+          "type": "judgement",
+          "description": "API design consistency and standards",
           "maxMark": 0.25,
-          "wsosSection": 5,
-          "extraDescription": "User credit balance accurately reflects earnings from chapter completions and deductions from session bookings",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Course Management API Implementation",
-      "aspects": [
-        {
-          "type": "measurement",
-          "description": "Course listing endpoint with enrollment status",
-          "maxMark": 0.75,
-          "wsosSection": 5,
-          "extraDescription": "GET /courses returns all courses with enrollment status for current user, includes course metadata",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Course details endpoint with chapter information",
-          "maxMark": 0.75,
-          "wsosSection": 5,
-          "extraDescription": "GET /courses/:id returns detailed course info with chapters array showing completion status, returns 404 for invalid IDs",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Course enrollment endpoint with conflict handling",
-          "maxMark": 0.75,
-          "wsosSection": 5,
-          "extraDescription": "POST /courses/:id/enroll creates enrollment record, returns 409 if already enrolled, 404 for invalid course",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Chapter completion endpoint with credit earning",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "POST /courses/:courseId/chapters/:chapterId/complete awards credits, updates balance, handles enrollment/completion validation",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Enrollment and completion status tracking accuracy",
-          "maxMark": 0.5,
-          "wsosSection": 5,
-          "extraDescription": "Database accurately tracks user enrollments and chapter completions with proper foreign key relationships",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Mentor Session API Implementation",
-      "aspects": [
-        {
-          "type": "measurement",
-          "description": "Mentor sessions listing endpoint",
-          "maxMark": 0.75,
-          "wsosSection": 5,
-          "extraDescription": "GET /mentors/sessions returns available sessions with mentor info, session details, and credit costs",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Session booking endpoint with credit validation",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "extraDescription": "POST /mentors/sessions/:id/book creates booking, validates sufficient credits, returns 403 for insufficient credits",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Credit deduction and transaction tracking",
-          "maxMark": 0.75,
-          "wsosSection": 5,
-          "extraDescription": "Booking deducts correct credits from user balance and creates transaction record with proper references",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        },
-        {
-          "type": "measurement",
-          "description": "Session availability and booking status management",
-          "maxMark": 0.5,
-          "wsosSection": 5,
-          "extraDescription": "Sessions marked as unavailable after booking, proper status tracking (pending, confirmed, etc.)",
-          "calculation": {
-            "type": "pass-or-fail"
-          }
-        }
-      ]
-    },
-    {
-      "name": "Code Quality and Architecture",
-      "aspects": [
-        {
-          "type": "judgement",
-          "description": "Laravel conventions and code organization",
-          "maxMark": 1,
-          "wsosSection": 5,
-          "judgementScoreDescription": [
-            "Poor code organization with no Laravel conventions followed and unstructured approach",
-            "Basic Laravel structure but inconsistent naming and poor separation of concerns",
-            "Good Laravel conventions with proper controllers, models, and middleware organization",
-            "Excellent Laravel implementation with perfect MVC structure, resource controllers, form requests, and clean architecture"
-          ]
-        },
-        {
-          "type": "judgement",
-          "description": "Database schema design and relationships",
-          "maxMark": 0.5,
-          "wsosSection": 5,
-          "judgementScoreDescription": [
-            "Poor database design with missing relationships and denormalization issues",
-            "Basic schema with some relationships but missing key constraints and indexes",
-            "Good normalized schema with proper foreign keys and most relationships defined",
-            "Excellent database design with optimal normalization, comprehensive constraints, and efficient indexing"
-          ]
-        },
-        {
-          "type": "judgement",
-          "description": "API consistency and RESTful design principles",
-          "maxMark": 0.5,
           "wsosSection": 5,
           "judgementScoreDescription": [
             "Poor API design with inconsistent endpoints and non-RESTful patterns",
-            "Basic API structure but inconsistent response formats and HTTP method usage",
-            "Good RESTful design with consistent response formats and proper HTTP methods",
-            "Excellent RESTful API with perfect consistency, resource-based URLs, and standardized response patterns"
+            "Basic API structure but inconsistent response formats and methods",
+            "Good RESTful design with consistent response formats and HTTP methods",
+            "Excellent RESTful API with perfect consistency and standardized patterns"
           ]
         }
       ]
