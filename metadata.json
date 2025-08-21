@@ -1,49 +1,34 @@
 {
-  "project": {
-    "name": "EuroSkills 2025 Module C - REST API Development",
-    "module": "C",
-    "competition": "EuroSkills 2025 Training Competition",
-    "skill": "Web Development (Skill 17)",
-    "duration_hours": 3,
-    "total_points": 15
-  },
-  "description": {
-    "summary": "Build a comprehensive REST API for SkillShare Academy platform with authentication, course management, mentor booking, and credit system",
-    "theme": "SkillShare Academy - Credit-based Learning Platform",
-    "focus": "Backend API development with Laravel, JWT authentication, and business logic implementation"
-  },
-  "technical_requirements": {
-    "framework": "Laravel 12.x",
-    "database": "MySQL",
-    "authentication": "JWT",
-    "validation": "Form Request Classes",
-    "architecture": "RESTful API with resource controllers"
-  },
-  "assessment": {
-    "wsos_sections": {
-      "work_organization": 1,
-      "communication": 1,
-      "design_implementation": 0,
-      "frontend_development": 0,
-      "backend_development": 13
-    },
-    "evaluation_criteria": [
-      "API endpoint functionality and validation",
-      "Laravel conventions and code quality",
-      "Security implementation and best practices",
-      "Database integration and business logic"
-    ]
-  },
-  "dependencies": {
-    "prerequisites": ["Module B database schema and sample data"],
-    "provides_for": ["Module D frontend integration"]
-  },
-  "key_features": [
-    "JWT authentication with API token management",
-    "Course management with enrollment and progress tracking",
-    "Mentor booking system with credit-based payments",
-    "Credit earning system (3-5 credits per chapter completion)",
-    "Transaction history and balance management",
-    "Comprehensive error handling and validation"
+  "id": 8,
+  "name": "ES2025-HU S17 - Module C",
+  "displayName": "SkillShare Academy REST API",
+  "description": "The task is to build a comprehensive REST API for the SkillShare Academy learning platform with authentication, course management, mentor booking, and credit system.",
+  "url": "https://github.com/marketable-it-skills/s17-es2025-training-hu-module_c-rest-api",
+  "skillDomainIds": [
+    1
+  ],
+  "competition": "EuroSkills 2025 Training Competition - Hungary",
+  "estTime": 3,
+  "authors": [
+    {
+      "name": "Skills IT (HU)",
+      "url": "https://skillsit.hu"
+    }
+  ],
+  "technologies": [
+    "PHP",
+    "Laravel",
+    "Node.js",
+    "Express.js",
+    "MySQL",
+    "REST API",
+    "OpenAPI"
+  ],
+  "tags": [
+    "backend",
+    "api development",
+    "authentication",
+    "database",
+    "rest api"
   ]
 }

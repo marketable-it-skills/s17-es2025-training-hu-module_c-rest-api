@@ -1,65 +1,21 @@
-# EuroSkills 2025 Module C - REST API Development
+# SkillShare Academy REST API
 
-## Project Overview
+The task is to build a comprehensive REST API for the SkillShare Academy learning platform with authentication, course management, mentor booking, and credit system.
 
-This test project simulates Module C of the EuroSkills 2025 Web Development competition. Competitors must build a comprehensive REST API for the SkillShare Academy platform, implementing user authentication, course management, mentor booking, and a credit-based learning system.
+## Skill domain(s)
 
-## Competition Details
+- Web Technologies
 
-- **Duration**: 3 hours
-- **Points**: 15 total (WSOS: 1+1+0+0+13)
-- **Technology**: Laravel 12.x, MySQL, JWT Authentication
-- **Prerequisites**: Completed Module B database schema
+## Task Origin
 
-## Project Structure
+This project task is based on test projects from the **EuroSkills 2025 Training Competition HU** for **Module C - REST API Development**. Tasks from these competitions are updated, modularized, and standardized to form the basis of the project task repository within the Erasmus+ "Marketable IT Skills : **Integrating Real-World Challenges into Vocational Education"** project.
 
-```
-/
-├── project-description.md     # Complete task specification
-├── development-and-deployment.md  # Setup and deployment guide
-├── metadata.json             # Project metadata
-├── marking/
-│   └── marking-scheme.json   # Assessment criteria
-└── assets/
-    └── project-description-images/  # Task-related images
-```
+## Content
 
-## Key Requirements
+- [Project Description](project-description.md)
+- [Database Schema](assets/db)
+- [OpenAPI Specifications](assets/api)
 
-### Core Features
+## About the MITS Project
 
-- JWT-based authentication system with API tokens
-- Course management API with enrollment and progress tracking
-- Mentor booking system with credit-based payments
-- Credit earning system (3-5 credits per chapter)
-- Transaction history and balance management
-
-### Technical Stack
-
-- **Backend**: Laravel 12.x with API routes
-- **Database**: MySQL with proper relationships
-- **Authentication**: JWT tokens with middleware protection
-- **Validation**: Form request classes with business rules
-- **Documentation**: Clear API endpoint documentation
-
-### API Endpoints (10-12 total)
-
-- Authentication: register, login, profile management
-- Courses: catalog, details, enrollment, progress
-- Mentors: discovery, profiles, booking, availability
-- Credits: balance, transactions, earning, spending
-
-## Assessment Focus
-
-1. **Functionality (13 pts)**: Working endpoints with proper validation
-2. **Code Quality**: Laravel conventions and clean architecture
-3. **Security**: Authentication, authorization, input sanitization
-4. **Integration**: Seamless connection with Module B database
-
-## Time Allocation
-
-1. **Setup & Auth (45 min)**: Laravel setup, JWT implementation
-2. **Database & Models (60 min)**: Schema extensions, Eloquent relationships
-3. **Core APIs (75 min)**: Endpoint implementation, validation, testing
-
-This project builds upon Module A (static design) and Module B (admin interface), preparing for Module D (frontend integration).
+This repository is part of the **"Marketable IT Skills: Integrating Real-World Challenges into Vocational Education"** (MITS) project. The project is supported by the **Erasmus+ programme** of the European Union. It is coordinated by the **HTTP Foundation** (Hungary) in cooperation with the partner institution **Helsinki Business College OY** (Finland). The primary goal of the project is to support IT vocational education by providing a collection of project tasks and a web application with an evaluation support system. These tasks aim to reflect labor market expectations, simulate real workplace challenges, and support talent management. The project's task collection draws upon competition materials of WorldSkills, EuroSkills and different national and international competition. The web application is being developed as part of the project activities.
