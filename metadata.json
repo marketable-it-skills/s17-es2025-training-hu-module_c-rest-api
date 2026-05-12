@@ -30,5 +30,6 @@
     "database",
     "rest api"
   ],
-  "status": "draft"
+  "status": "draft",
+  "publishedAt": "2026-05-01"
 }
