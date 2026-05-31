@@ -34,11 +34,7 @@ The API shall be implemented using one of the provided frameworks.
 
 ### Data Model
 
-- The backend uses a **MySQL** database for data storage.
-- It can be accessed at `db.ssa.skillsit.hu`, using port `3306` with the provided credentials.
-- The database name follows the format: `competitor-c-YY`, where `YY` is your workstation number.
-
-The database is currently empty. Use the given SQL dump in [`assets/module-c/db.sql`]('./assets/module-c/db.sql) to import the data. Please do not change the given tables and data, but you may extend the database schema to store additional data.
+- The backend uses a **MySQL** database for data storage. Use the given SQL dump in [`assets/module-c/db.sql`]('./assets/db/skillshare_academy.sql) to import the data. Please do not change the given tables and data, but you may extend the database schema to store additional data.
 
 ```mermaid
 erDiagram
@@ -104,8 +100,6 @@ erDiagram
     }
 ```
 
-PHPMyAdmin is also available at `pma.ssa.skillsit.hu`.
-
 **Provide a database SQL dump of the schema and data** that you are using in the `db/db-dump.sql` file in your solution repository.
 
 ### Content Service
@@ -141,7 +135,6 @@ Errors:
 - The `Content-Type` header of a response is always `application/json` unless specified otherwise.
 - The given URLs are relative to the base URL of the API: `/api/v1`.
 - All endpoints require endpoints must require an API token to be passed in the `X-API-TOKEN` header except for the following:
-
   - POST `/users/register`
   - POST `/users/login`
 
