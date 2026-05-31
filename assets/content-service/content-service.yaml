@@ -1,32 +1,11 @@
 # Local content service stack for Module C.
 # Start: docker compose -f assets/content-service/content-service.yaml up -d
-# API:   http://content-service.localhost/api/courses  (or https://content-service.localhost)
-# Add to hosts file if needed: 127.0.0.1 content-service.localhost
+# API:   http://localhost:5000 
+# PMA:   http://localhost:8081
 
 name: content-service
 
 services:
-  traefik:
-    image: traefik:v3.3
-    container_name: content-service-traefik
-    restart: unless-stopped
-    command:
-      - --api.dashboard=true
-      - --api.insecure=true
-      - --providers.docker=true
-      - --providers.docker.exposedbydefault=false
-      - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
-      - --entrypoints.websecure.http.tls=true
-    ports:
-      - "80:80"
-      - "443:443"
-      - "8080:8080"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    networks:
-      - content-service
-
   db:
     image: mariadb:11
     container_name: content-service-db
@@ -47,7 +26,7 @@ services:
       - content-service
 
   content-services:
-    image: ghcr.io/skillsit-hu/es2025-s17-training-competition-hu-module_c-content-services:latest
+    image: ghcr.io/marketable-it-skills/s17-es2025-training-hu-module_c-rest-api-content-service:latest
     container_name: content-services
     restart: unless-stopped
     depends_on:
@@ -55,19 +34,24 @@ services:
         condition: service_healthy
     environment:
       DATABASE_URL: mysql://root:${MYSQL_ROOT_PASSWORD:-skill17}@db:3306/${MYSQL_DATABASE:-content-service}
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=content-service
-      # HTTP (simple local testing)
-      - traefik.http.routers.content-services-http.rule=Host(`content-service.localhost`)
-      - traefik.http.routers.content-services-http.entrypoints=web
-      - traefik.http.routers.content-services-http.service=content-services
-      # HTTPS (matches production-style routing)
-      - traefik.http.routers.content-services.rule=Host(`content-service.localhost`)
-      - traefik.http.routers.content-services.entrypoints=websecure
-      - traefik.http.routers.content-services.tls=true
-      - traefik.http.routers.content-services.service=content-services
-      - traefik.http.services.content-services.loadbalancer.server.port=5000
+    ports:
+      - "5000:5000"
+    networks:
+      - content-service
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: content-service-phpmyadmin
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD:-skill17}
+    ports:
+      - "8081:80"
     networks:
       - content-service
 

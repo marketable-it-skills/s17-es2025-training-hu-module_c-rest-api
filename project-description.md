@@ -108,13 +108,15 @@ PHPMyAdmin is also available at `pma.ssa.skillsit.hu`.
 
 **Provide a database SQL dump of the schema and data** that you are using in the `db/db-dump.sql` file in your solution repository.
 
-### External Content Service
+### Content Service
 
-The external content service is accessible to your REST API server in a private network without authentication, but it is not accessible to the public at all.
+The content service provides course catalog and chapter data. It runs as a separate process from your unified API, has **no authentication**, and must not be exposed as your public API. Your backend calls it internally and wraps its endpoints for clients.
 
-**Content Service URL:** `https://content.ssa.skillsit.hu`
+**Content Service URL:** `http://localhost:5000`
 
-You can find the OpenAPI documentation for this service here: `assets/api/content-service-api.yaml`
+Start the service with Docker Compose before development and testing. Setup instructions, the database seed, and phpMyAdmin are documented in [`assets/content-service/README.md`](assets/content-service/README.md).
+
+OpenAPI specification: [`assets/api/content-service-api.yaml`](assets/api/content-service-api.yaml)
 
 ### Error Handling
 
