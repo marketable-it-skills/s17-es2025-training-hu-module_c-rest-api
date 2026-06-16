@@ -21,7 +21,7 @@
         },
         {
           "type": "measurement",
-          "description": "Server starts on port 3000 and responds to requests",
+          "description": "Server starts on port 80 and responds to requests",
           "maxMark": 0.5,
           "wsosSection": 1,
           "extraDescription": "API server starts without errors and accepts HTTP requests",
